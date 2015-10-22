@@ -8,8 +8,9 @@
   background-color: black;
   outline:none;
   -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  transition: opacity 0.2s, transform 1s;
 }
 
 .fs-toolbar{
@@ -88,6 +89,8 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+  transition: opacity 0.2s;
+  transform: translateZ(0);
 }
 
 .fs-gallery{
@@ -101,6 +104,7 @@
   -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+  transition: transform 0.1s;
 
 }
 
