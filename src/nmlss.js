@@ -1,3 +1,5 @@
+'use strict';
+
 function FullScreenImage(){
   var self = this;
   this.container = document.createElement('div');
@@ -164,6 +166,7 @@ FullScreenImage.prototype.setImage = function(img){
     this.currentKeyIndex = this.images[img].i;
     var obj = this.images[img];
     this.current = obj;
+    this.current.elem.classList.add('fs-active');
     self.prepareImage(obj);
     var contWidth = window.innerWidth;
     var imgWidth = obj.elem.clientWidth;
@@ -180,6 +183,8 @@ FullScreenImage.prototype.setImage = function(img){
     self.prepareImage(obj.i - 1);
 
     if(old != null){
+
+      old.elem.classList.remove('fs-active');
       old.big.style.opacity = 0;
       //old.big.style.visibility = 'hidden';
       old.big.style.zIndex = 0;
