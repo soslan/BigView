@@ -1,115 +1,124 @@
+// Variables
+
+$animation-duration: 0.1s;
+$bar-height: 32px;
+
+
 .fs-container{
-  position:fixed;
+  position: fixed;
   z-index: 1001;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: black;
-  outline:none;
+  outline: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  transition: opacity 0.2s, transform 1s;
+  transition: opacity $animation-duration, transform $animation-duration;
 }
 
 .fs-toolbar{
-  top:0;
+  top: 0;
   position: absolute;
   height: 32px;
-  left:0;
-  right:0;
+  left: 0;
+  right: 0;
   z-index: 1000;
 }
 
-.fs-close,
 .fs-button{
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
   background-color: black;
-  border:0;
-  fill:white;
+  border: 0;
+  fill: white;
   height: 32px;
   width: 32px;
-  opacity:0.7;
+  opacity: 0.7;
   cursor: pointer;
-}
+  transition: opacity $animation-duration;
 
-.fs-button:focus{
-  outline: none;
-  opacity:0.8;
-}
-.fs-button:hover{
-  opacity: 1;
-  outline: none;
+  &:focus{
+    outline: none;
+    opacity: 0.8;
+  }
+
+  &:hover{
+    opacity: 1;
+    outline: none;
+  }
 }
 
 .fs-close{
-  float:right;
+  float: right;
 }
 
 .fs-navigation{
   position: absolute;
   text-align: center;
   height: 32px;
-  bottom:90px;
-  width:100%;
-  left:0;
+  bottom: 90px;
+  right: 0;
+  left: 0;
+  transform: translateZ(0);
 }
 
 .fs-body{
   position: absolute;
-  bottom:122px;
-  left:0;
-  right:0;
-  top:32px;
-  //height:100%;
-  width:100%;
+  bottom: 122px;
+  left: 0;
+  right: 0;
+  top: 32px;
+  //height: 100%;
+  width: 100%;
 }
 
 .fs-image{
-    position: absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  top:0;
-  margin:auto;
-    max-width: 100%;
-    max-height: 100%; 
-    cursor:pointer;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-  transition: opacity 0.2s;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  transition: opacity $animation-duration;
   transform: translateZ(0);
 }
 
 .fs-gallery{
   white-space: nowrap;
-  overflow:hidden;
-  position:absolute;
-  bottom:0;
-  height:90px;
-  left:0;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  height: 90px;
+  left: 0;
   background-color: black;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  transition: transform 0.1s;
+  transition: transform $animation-duration;
   transform: translateZ(0);
 }
 
 .fs-gallery > img{
-  height:80px;
-  margin-right:5px;
+  height: 80px;
+  margin-right: 5px;
   margin-left: 5px;
   margin: 0px 5px 10px 5px;
   opacity: 0.5;
-  cursor:pointer;
+  cursor: pointer;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  transition: opacity 0.1s;
+  transition: opacity $animation-duration;
+  //transform: translateZ(0);
   //-webkit-filter: grayscale(100%);
 
   &.fs-active{
