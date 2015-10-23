@@ -86,7 +86,7 @@ function FullScreenImage(){
   });
 
   this.closeButton = e({
-    class:'fs-button',
+    class:'fs-button fs-close',
     tag:'button',
     parent:this.toolbar,
     content:'<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="32" viewBox="0 0 24 24" width="32">\
@@ -238,7 +238,11 @@ function e(args){
   args = args || {};
 
   var element = document.createElement( args.tag || 'div' );
-  element.classList.add(args.class);
+  if(typeof args.class === "string"){
+    args.class.split(" ").forEach(function(className){
+      element.classList.add(className);
+    });
+  }
 
   if(typeof args.content === "string" || typeof args.content === "number"){
     element.innerHTML = args.content;
