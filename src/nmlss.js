@@ -105,7 +105,7 @@ function FullScreenImage(){
   // Centering active thumbnail on resize.
   var resizeRunning = false;
   window.addEventListener('resize', function(){
-    if(resizeRunning){
+    if(resizeRunning || !self.displayed){
       return;
     }
 
@@ -118,6 +118,7 @@ function FullScreenImage(){
   });
 
   // Properties
+  this.displayed = false;
   this.images = {};
   this.imageKeys = [];
   this.currentKeyIndex;
@@ -130,6 +131,7 @@ function FullScreenImage(){
 
 FullScreenImage.prototype.show = function(target){
   if(target instanceof HTMLElement){
+    this.displayed = true;
     document.body.style.overflow = 'hidden';
     this.container.style.zIndex = 100;
     this.container.style.opacity = 0;
@@ -141,6 +143,7 @@ FullScreenImage.prototype.show = function(target){
 }
 
 FullScreenImage.prototype.hide = function(){
+  this.displayed = false;
   document.body.style.overflow = null;
   this.container.style.opacity = 0;
   this.container.style.zIndex = -100;
