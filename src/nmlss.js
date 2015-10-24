@@ -2,11 +2,12 @@
 
 function FullScreenImage(){
   var self = this;
-  this.container = document.createElement('div');
+
+  this.container = e({
+    class: 'fs-container',
+  });
   this.container.style.display = "none";
   this.container.setAttribute('tabindex', -1);
-  this.container.classList.add("fs-container");
-  document.body.appendChild(this.container);
 
   this.container.addEventListener('keydown', function(e){
     var nextKeys = [76, 68, 74, 83, 9];
@@ -43,17 +44,20 @@ function FullScreenImage(){
     e.stopPropagation();
   });
 
-  this.toolbar = document.createElement('div');
-  this.toolbar.classList.add("fs-toolbar");
-  this.body = document.createElement('div');
-  this.body.classList.add("fs-body");
+  this.toolbar = e({
+    class: 'fs-toolbar',
+    parent: this.container,
+  });
 
-  this.navigation = document.createElement('div');
-  this.navigation.classList.add('fs-navigation');
+  this.body = e({
+    class: 'fs-body',
+    parent: this.container,
+  });
 
-  this.container.appendChild(this.toolbar);
-  this.container.appendChild(this.body);
-  this.container.appendChild(this.navigation);
+  this.navigation = e({
+    class: 'fs-navigation',
+    parent: this.container,
+  });
 
   this.prevButton = e({
     class:'fs-button',
@@ -61,9 +65,9 @@ function FullScreenImage(){
     parent:this.navigation,
     content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32">\
       <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>',
-  });
-  this.prevButton.addEventListener('click', function(e){
-    self.prev();
+    action: function(e){
+      self.prev();
+    }
   });
 
   this.nextButton = e({
@@ -72,19 +76,18 @@ function FullScreenImage(){
     parent:this.navigation,
     content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32">\
       <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>',
-  });
-  this.nextButton.addEventListener('click', function(e){
-    self.next();
+    action: function(e){
+      self.next();
+    }
   });
 
-  this.gallery = document.createElement('div');
   this.gallery = e({
     tag:'div',
     class:'fs-gallery',
     parent: this.container,
-  });
-  this.gallery.addEventListener('click', function(e){
-    self.setImage(e.target.src);
+    action: function(e){
+      self.setImage(e.target.src);
+    }
   });
 
   this.closeButton = e({
@@ -94,11 +97,12 @@ function FullScreenImage(){
     content:'<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="32" viewBox="0 0 24 24" width="32">\
       <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
       </svg>',
-  });
-  this.closeButton.addEventListener('click', function(e){
-    self.hide();
+    action: function(e){
+      self.hide();
+    }
   });
 
+  // Centering active thumbnail on resize.
   var resizeRunning = false;
   window.addEventListener('resize', function(){
     if(resizeRunning){
@@ -113,9 +117,14 @@ function FullScreenImage(){
     });
   });
 
+  // Properties
   this.images = {};
   this.imageKeys = [];
   this.currentKeyIndex;
+  this.current; // Current image object
+
+
+  document.body.appendChild(this.container);
 
 }
 
@@ -163,8 +172,10 @@ FullScreenImage.prototype.prepareImage = function(obj){
     return;
   }
   if(obj.big == null){
-    obj.big = document.createElement('img');
-    obj.big.classList.add('fs-image');
+    obj.big = e({
+      tag: 'img',
+      class: 'fs-image',
+    });
     obj.big.src = obj.src;
     obj.big.style.opacity = 0; // 0.01
     //obj.big.style.visibility = 'hidden';
@@ -243,8 +254,10 @@ FullScreenImage.prototype.setGallery = function(images){
     if( self.images[v.src] !== undefined){
       return;
     } 
-    var dest = document.createElement('img');
-    self.gallery.appendChild(dest);
+    var dest = e({
+      tag: 'img',
+      parent: self.gallery,
+    });
     dest.src = v.src;
     self.imageKeys.push(dest.src);
     var obj = {
@@ -273,6 +286,11 @@ function e(args){
 
   if(args.parent instanceof HTMLElement){
     args.parent.appendChild(element);
+  }
+
+  if(typeof args.action === "function"){
+    // TODO: Touch events
+    element.addEventListener('click', args.action);
   }
 
   return element;
