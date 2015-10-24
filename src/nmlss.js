@@ -99,6 +99,20 @@ function FullScreenImage(){
     self.hide();
   });
 
+  var resizeRunning = false;
+  window.addEventListener('resize', function(){
+    if(resizeRunning){
+      return;
+    }
+
+    resizeRunning = true;
+
+    window.requestAnimationFrame(function(){
+      self.fixGalleryPosition();
+      resizeRunning = false;
+    });
+  });
+
   this.images = {};
   this.imageKeys = [];
   this.currentKeyIndex;
@@ -159,6 +173,19 @@ FullScreenImage.prototype.prepareImage = function(obj){
   }
 }
 
+FullScreenImage.prototype.fixGalleryPosition = function(){
+  var contWidth = window.innerWidth;
+  var imgWidth = this.current.elem.clientWidth;
+  var elemPos = this.current.elem.offsetLeft;
+  var galleryPos = this.gallery.offsetLeft;
+  var elemAbsPos = elemPos + galleryPos;
+  var desiredPos = ( contWidth / 2 ) - ( imgWidth / 2 );
+
+  var shift = elemAbsPos - desiredPos;
+
+  this.gallery.style.transform = 'translateX('+ (galleryPos - shift) +'px)';
+}
+
 FullScreenImage.prototype.setImage = function(img){
   var self = this;
   if(typeof img === "string"){
@@ -168,16 +195,7 @@ FullScreenImage.prototype.setImage = function(img){
     this.current = obj;
     this.current.elem.classList.add('fs-active');
     self.prepareImage(obj);
-    var contWidth = window.innerWidth;
-    var imgWidth = obj.elem.clientWidth;
-    var elemPos = obj.elem.offsetLeft;
-    var galleryPos = this.gallery.offsetLeft;
-    var elemAbsPos = elemPos + galleryPos;
-    var desiredPos = ( contWidth / 2 ) - ( imgWidth / 2 );
-
-    var shift = elemAbsPos - desiredPos;
-
-    this.gallery.style.transform = 'translateX('+ (galleryPos - shift) +'px)';
+    this.fixGalleryPosition();
 
     self.prepareImage(obj.i + 1);
     self.prepareImage(obj.i - 1);
