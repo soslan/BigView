@@ -10,25 +10,10 @@ function FullScreenImage(){
   this.container.setAttribute('tabindex', -1);
 
   this.container.addEventListener('keydown', function(e){
-    var nextKeys = [76, 68, 74, 83, 9];
-    var prevKeys = [65, 72, 75, 87];
-    var exitCodes;
-    if(e.keyCode === 39 ){
-      self.next();
-    }
-    else if(e.keyCode === 37){
-      self.prev();
-    }
-    else if(e.keyCode === 13){
-      self.next();
-    }
-    else if(e.keyCode === 27){
-      self.hide();
-    }
-    else if(e.keyCode === 32){
-      self.next();
-    }
-    else if(e.keyCode === 8){
+    var nextKeys = [76, 68, 74, 83, 9, 13, 32, 39, 40];
+    var prevKeys = [65, 72, 75, 87, 37, 38];
+    var exitCodes = [27, 8];
+    if(e.keyCode === 9 && e.shiftKey){
       self.prev();
     }
     else if(nextKeys.indexOf(e.keyCode) !== -1){
@@ -36,6 +21,9 @@ function FullScreenImage(){
     }
     else if(prevKeys.indexOf(e.keyCode) !== -1){
       self.prev();
+    }
+    else if(exitCodes.indexOf(e.keyCode) !== -1){
+      self.hide();
     }
     else{
       return;
