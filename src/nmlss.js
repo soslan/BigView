@@ -211,7 +211,7 @@ FullScreenImage.prototype.setImage = function(img){
     self.prepareImage(obj.i + 1);
     self.prepareImage(obj.i - 1);
 
-    if(old != null){
+    if(old != null && old != this.current){
 
       old.elem.classList.remove('fs-active');
       old.big.style.opacity = 0;
