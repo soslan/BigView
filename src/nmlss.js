@@ -40,6 +40,15 @@ function FullScreenImage(){
   this.body = e({
     class: 'fs-body',
     parent: this.container,
+    // action: function(e){
+    //   // if(e.target.tagName.toLowerCase() === 'img'){
+    //   //   self.next();
+    //   // }
+
+    //   self.next();
+    //   e.stopPropagation();
+    //   e.preventDefault();
+    // }
   });
 
   this.navigation = e({
@@ -158,6 +167,7 @@ FullScreenImage.prototype.getImageObj = function(arg){
 }
 
 FullScreenImage.prototype.prepareImage = function(obj){
+  var self = this;
   obj = this.getImageObj(obj);
   if (obj == null){
     return;
@@ -166,6 +176,11 @@ FullScreenImage.prototype.prepareImage = function(obj){
     obj.big = e({
       tag: 'img',
       class: 'fs-image',
+      action: function(e){
+        self.next();
+        e.preventDefault();
+        e.stopPropagation();
+      }
     });
     obj.big.src = obj.src;
     obj.big.style.opacity = 0; // 0.01
