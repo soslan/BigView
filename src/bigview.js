@@ -40,15 +40,13 @@ function BigView(){
   this.body = e({
     class: 'bv-body',
     parent: this.container,
-    // action: function(e){
-    //   // if(e.target.tagName.toLowerCase() === 'img'){
-    //   //   self.next();
-    //   // }
-
-    //   self.next();
-    //   e.stopPropagation();
-    //   e.preventDefault();
-    // }
+    action: function(e){
+      if(e.target.tagName.toLowerCase() === "img"){  
+        self.next();
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }
   });
 
   this.navigation = e({
@@ -60,8 +58,7 @@ function BigView(){
     class:'bv-button',
     tag:'button',
     parent:this.navigation,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32">\
-      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>',
+    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>',
     action: function(e){
       self.prev();
     }
@@ -71,8 +68,7 @@ function BigView(){
     class:'bv-button',
     tag:'button',
     parent:this.navigation,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32">\
-      <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>',
+    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>',
     action: function(e){
       self.next();
     }
@@ -83,7 +79,7 @@ function BigView(){
     class:'bv-gallery',
     parent: this.container,
     action: function(e){
-      self.setImage(e.target.src);
+      self.setImage(e.target);
     }
   });
 
@@ -91,9 +87,7 @@ function BigView(){
     class:'bv-button bv-close',
     tag:'button',
     parent:this.toolbar,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="32" viewBox="0 0 24 24" width="32">\
-      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
-      </svg>',
+    content:'<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="32" viewBox="0 0 24 24" width="32"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>',
     action: function(e){
       self.hide();
     }
@@ -116,13 +110,19 @@ function BigView(){
 
   // Properties
   this.displayed = false;
-  this.images = {};
+  this.images = [];
   this.imageKeys = [];
   this.currentKeyIndex;
   this.current; // Current image object
 
 
   document.body.appendChild(this.container);
+
+  if(typeof BigView.numberOfBigViews !== "number"){
+    BigView.numberOfBigViews = 0;
+  }
+  this.id = BigView.numberOfBigViews;
+  BigView.numberOfBigViews++;
 
 }
 
@@ -133,7 +133,7 @@ BigView.prototype.show = function(target){
     this.container.style.zIndex = 100;
     this.container.style.opacity = 0;
     this.container.style.display = 'block';
-    this.setImage(target.src);
+    this.setImage(target);
     this.container.focus();
     this.container.style.opacity = 1;
   }
@@ -192,8 +192,8 @@ BigView.prototype.prepareImage = function(obj){
 
 BigView.prototype.fixGalleryPosition = function(){
   var contWidth = window.innerWidth;
-  var imgWidth = this.current.elem.clientWidth;
-  var elemPos = this.current.elem.offsetLeft;
+  var imgWidth = this.current.thumbnail.clientWidth;
+  var elemPos = this.current.thumbnail.offsetLeft;
   var galleryPos = this.gallery.offsetLeft;
   var elemAbsPos = elemPos + galleryPos;
   var desiredPos = ( contWidth / 2 ) - ( imgWidth / 2 );
@@ -203,51 +203,91 @@ BigView.prototype.fixGalleryPosition = function(){
   this.gallery.style.transform = 'translateX('+ (galleryPos - shift) +'px)';
 }
 
-BigView.prototype.setImage = function(img){
-  var self = this;
-  if(typeof img === "string"){
-    var old = this.current;
-    this.currentKeyIndex = this.images[img].i;
-    var obj = this.images[img];
-    this.current = obj;
-    this.current.elem.classList.add('bv-active');
-    self.prepareImage(obj);
-    this.fixGalleryPosition();
-
-    self.prepareImage(obj.i + 1);
-    self.prepareImage(obj.i - 1);
-
-    if(old != null && old != this.current){
-
-      old.elem.classList.remove('bv-active');
-      old.big.style.opacity = 0;
-      //old.big.style.visibility = 'hidden';
-      old.big.style.zIndex = 0;
+BigView.prototype.getImageObject = function(arg){
+  if(typeof arg === "number"){
+    if(arg >= this.images.length){
+      return this.getImageObject(arg - this.images.length);
     }
-    this.current.big.style.opacity = 1;
-    this.current.big.style.visibility = null;
-    this.current.big.style.zIndex = 1;
-  }
-  else if(typeof img === "number"){
-    if(img >= this.imageKeys.length){
-      this.setImage(img - this.imageKeys.length);
-    }
-    else if(img < 0){
-      this.setImage(img + this.imageKeys.length);
+    else if(arg < 0){
+      return this.getImageObject(arg + this.images.length);
     }
     else{
-      this.setImage(this.imageKeys[img]);
-    }   
+      return this.images[arg];
+    }
   }
-  
+  else if(arg instanceof BigViewImage){
+    if(this.images.indexOf(arg) !== -1){
+      return arg;
+    }
+  }
+  else if(arg instanceof Node){
+    if(arg.bigViews != null){
+      return this.getImageObject(arg.bigViews[this.id]);
+    }
+    else if(arg.bigViewObject instanceof BigViewImage){
+      return arg.bigViewObject;
+    }
+  }
+  else{
+    return null;
+  }
+}
+
+
+BigView.prototype.setImage = function(img){
+  var self = this;
+  img = self.getImageObject(img);
+  if(img instanceof BigViewImage){
+    var old = this.current;
+    this.current = img;
+    this.fixGalleryPosition();
+
+    //img.container.classList.add('bv-active');
+    img.activate();
+
+    // self.prepareImage(obj.i + 1);
+    // self.prepareImage(obj.i - 1);
+
+    if(old != null && old != img){
+      old.deactivate();
+      //old.container.classList.remove('bv-active');
+      // old.big.style.opacity = 0;
+      // //old.big.style.visibility = 'hidden';
+      // old.big.style.zIndex = 0;
+    }
+    // this.current.big.style.opacity = 1;
+    // this.current.big.style.visibility = null;
+    // this.current.big.style.zIndex = 1;
+  }
 }
 
 BigView.prototype.next = function(){
-  this.setImage(this.currentKeyIndex + 1);
+  this.setImage(this.current.i + 1);
 }
 
 BigView.prototype.prev = function(){
-  this.setImage(this.currentKeyIndex - 1);
+  this.setImage(this.current.i - 1);
+}
+
+BigView.prototype.addImages = function(images){
+  var self = this;
+  if (images.jquery){
+    images.each(function(i,elem){
+      if(elem.tagName.toLowerCase() === "img"){
+        var img = new BigViewImage({
+          bigView: self,
+          src: elem.src,
+        });
+        self.images.push(img);
+        if(typeof elem.bigViews !== "object"){
+          elem.bigViews = {};
+        }
+        elem.bigViews[self.id] = img;
+
+        self.body.appendChild(img.container);
+      }
+    });
+  }
 }
 
 BigView.prototype.setGallery = function(images){
@@ -276,6 +316,65 @@ BigView.prototype.setGallery = function(images){
   });
 }
 
+function BigViewImage(args){
+  args  = args || {};
+  this.bigView = args.bigView;
+
+  this.container = e({
+    class: "bv-img-cont",
+  });
+
+  this.img = e({
+    tag: 'img',
+    class: 'bv-img',
+    parent: this.container,
+    attributes: {
+      src: args.src,
+    },
+  });
+
+  this.img.bigViewObject = this;
+
+  this.description = e({
+    class: 'bv-desc',
+    parent: this.container,
+  });
+
+  this.thumbnail = e({
+    tag: 'img',
+    attributes: {
+      src: args.src,
+    },
+    parent: this.bigView.gallery,
+  });
+
+  this.thumbnail.bigViewObject = this;
+}
+
+BigViewImage.prototype.activate = function(){
+  this.container.classList.add('bv-active');
+  this.thumbnail.classList.add('bv-active');
+}
+
+BigViewImage.prototype.deactivate = function(){
+  this.container.classList.remove('bv-active');
+  this.thumbnail.classList.remove('bv-active');
+}
+
+BigViewImage.prototype.next = function(){
+  return this.bigView.getImageObject(this.i + 1);
+}
+
+BigViewImage.prototype.prev = function(){
+  return this.bigView.getImageObject(this.i - 1);
+}
+
+Object.defineProperty(BigViewImage.prototype, 'i', {
+  get: function(){
+    return this.bigView.images.indexOf(this);
+  }
+});
+
 function e(args){
   args = args || {};
 
@@ -292,6 +391,18 @@ function e(args){
 
   if(args.parent instanceof HTMLElement){
     args.parent.appendChild(element);
+  }
+
+  if(typeof args.attributes === "object"){
+    for (var key in args.attributes){
+      element.setAttribute(key, args.attributes[key]);
+    }
+  }
+
+  if(typeof args.style === "object"){
+    for (var i in args.style){
+      element.style[i] = args.style[i];
+    }
   }
 
   if(typeof args.action === "function"){

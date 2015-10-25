@@ -75,21 +75,39 @@ $bar-height: 32px;
   width: 100%;
 }
 
-.bv-image{
+.bv-img-cont{
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
+  opacity: 0;
+  z-index: 0;
   margin: auto;
   max-width: 100%;
   max-height: 100%;
-  cursor: pointer;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   transition: opacity $animation-duration;
-  transform: translateZ(0);
+  //transform: translateZ(0);
+
+  &.bv-active{
+    opacity: 1;
+    z-index: 1;
+  }
+
+  & > .bv-img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    cursor: pointer;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .bv-gallery{
