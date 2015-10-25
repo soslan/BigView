@@ -1,6 +1,6 @@
 'use strict';
 
-function FullScreenImage(){
+function BigView(){
   var self = this;
 
   this.container = e({
@@ -126,7 +126,7 @@ function FullScreenImage(){
 
 }
 
-FullScreenImage.prototype.show = function(target){
+BigView.prototype.show = function(target){
   if(target instanceof HTMLElement){
     this.displayed = true;
     document.body.style.overflow = 'hidden';
@@ -139,14 +139,14 @@ FullScreenImage.prototype.show = function(target){
   }
 }
 
-FullScreenImage.prototype.hide = function(){
+BigView.prototype.hide = function(){
   this.displayed = false;
   document.body.style.overflow = null;
   this.container.style.opacity = 0;
   this.container.style.zIndex = -100;
 }
 
-FullScreenImage.prototype.getImageObj = function(arg){
+BigView.prototype.getImageObj = function(arg){
   if(typeof arg === "string"){
     return this.images[arg];
   }
@@ -166,7 +166,7 @@ FullScreenImage.prototype.getImageObj = function(arg){
   }
 }
 
-FullScreenImage.prototype.prepareImage = function(obj){
+BigView.prototype.prepareImage = function(obj){
   var self = this;
   obj = this.getImageObj(obj);
   if (obj == null){
@@ -190,7 +190,7 @@ FullScreenImage.prototype.prepareImage = function(obj){
   }
 }
 
-FullScreenImage.prototype.fixGalleryPosition = function(){
+BigView.prototype.fixGalleryPosition = function(){
   var contWidth = window.innerWidth;
   var imgWidth = this.current.elem.clientWidth;
   var elemPos = this.current.elem.offsetLeft;
@@ -203,7 +203,7 @@ FullScreenImage.prototype.fixGalleryPosition = function(){
   this.gallery.style.transform = 'translateX('+ (galleryPos - shift) +'px)';
 }
 
-FullScreenImage.prototype.setImage = function(img){
+BigView.prototype.setImage = function(img){
   var self = this;
   if(typeof img === "string"){
     var old = this.current;
@@ -242,15 +242,15 @@ FullScreenImage.prototype.setImage = function(img){
   
 }
 
-FullScreenImage.prototype.next = function(){
+BigView.prototype.next = function(){
   this.setImage(this.currentKeyIndex + 1);
 }
 
-FullScreenImage.prototype.prev = function(){
+BigView.prototype.prev = function(){
   this.setImage(this.currentKeyIndex - 1);
 }
 
-FullScreenImage.prototype.setGallery = function(images){
+BigView.prototype.setGallery = function(images){
   var self = this;
   this.gallery.innerHTML = '';
   this.images = {};
