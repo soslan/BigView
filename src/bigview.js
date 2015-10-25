@@ -4,7 +4,7 @@ function BigView(){
   var self = this;
 
   this.container = e({
-    class: 'fs-container',
+    class: 'bv-container',
   });
   this.container.style.display = "none";
   this.container.setAttribute('tabindex', -1);
@@ -33,12 +33,12 @@ function BigView(){
   });
 
   this.toolbar = e({
-    class: 'fs-toolbar',
+    class: 'bv-toolbar',
     parent: this.container,
   });
 
   this.body = e({
-    class: 'fs-body',
+    class: 'bv-body',
     parent: this.container,
     // action: function(e){
     //   // if(e.target.tagName.toLowerCase() === 'img'){
@@ -52,12 +52,12 @@ function BigView(){
   });
 
   this.navigation = e({
-    class: 'fs-navigation',
+    class: 'bv-navigation',
     parent: this.container,
   });
 
   this.prevButton = e({
-    class:'fs-button',
+    class:'bv-button',
     tag:'button',
     parent:this.navigation,
     content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32">\
@@ -68,7 +68,7 @@ function BigView(){
   });
 
   this.nextButton = e({
-    class:'fs-button',
+    class:'bv-button',
     tag:'button',
     parent:this.navigation,
     content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32">\
@@ -80,7 +80,7 @@ function BigView(){
 
   this.gallery = e({
     tag:'div',
-    class:'fs-gallery',
+    class:'bv-gallery',
     parent: this.container,
     action: function(e){
       self.setImage(e.target.src);
@@ -88,7 +88,7 @@ function BigView(){
   });
 
   this.closeButton = e({
-    class:'fs-button fs-close',
+    class:'bv-button bv-close',
     tag:'button',
     parent:this.toolbar,
     content:'<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="32" viewBox="0 0 24 24" width="32">\
@@ -175,7 +175,7 @@ BigView.prototype.prepareImage = function(obj){
   if(obj.big == null){
     obj.big = e({
       tag: 'img',
-      class: 'fs-image',
+      class: 'bv-image',
       action: function(e){
         self.next();
         e.preventDefault();
@@ -210,7 +210,7 @@ BigView.prototype.setImage = function(img){
     this.currentKeyIndex = this.images[img].i;
     var obj = this.images[img];
     this.current = obj;
-    this.current.elem.classList.add('fs-active');
+    this.current.elem.classList.add('bv-active');
     self.prepareImage(obj);
     this.fixGalleryPosition();
 
@@ -219,7 +219,7 @@ BigView.prototype.setImage = function(img){
 
     if(old != null && old != this.current){
 
-      old.elem.classList.remove('fs-active');
+      old.elem.classList.remove('bv-active');
       old.big.style.opacity = 0;
       //old.big.style.visibility = 'hidden';
       old.big.style.zIndex = 0;
