@@ -29,6 +29,8 @@ $bar-height: 32px;
 }
 
 .bv-button{
+  width: 32px;
+  height: 32px;
   padding: 0;
   margin: 0;
   background-color: black;
@@ -124,7 +126,7 @@ $bar-height: 32px;
     opacity: 0.6;
     -webkit-user-select: initial;
             user-select: initial;
-    transition: bottom $animation-duration;
+    transition: bottom $animation-duration, transform $animation-duration;
 
     &::selection{
       color: black;
@@ -135,6 +137,10 @@ $bar-height: 32px;
       display: none;
     }
   }
+}
+
+.bv-desc-button{
+  float: right;
 }
 
 .bv-gallery{

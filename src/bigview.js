@@ -84,6 +84,16 @@ function BigView(){
     }
   });
 
+  this.descButton = e({
+    class:'bv-button bv-desc-button',
+    tag:'button',
+    parent:this.navigation,
+    content:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>',
+    action: function(e){
+      self.toggleDescription();
+    }
+  });
+
   this.gallery = e({
     tag:'div',
     class:'bv-gallery',
@@ -253,6 +263,7 @@ BigView.prototype.setImage = function(img){
     this.fixGalleryPosition();
 
     //img.container.classList.add('bv-active');
+    img.prepare();
     img.activate();
 
     // self.prepareImage(obj.i + 1);
@@ -325,6 +336,17 @@ BigView.prototype.setGallery = function(images){
     };
     self.images[dest.src] = obj;
   });
+}
+
+BigView.prototype.toggleDescription = function(){
+  if(this.descriptionEnabled){
+    this.descriptionEnabled = false;
+    this.current.hideDescription();
+  }
+  else{
+    this.descriptionEnabled = true;
+    this.current.showDescription();
+  }
 }
 
 BigView.prototype.startSlideshow = function(){
@@ -401,8 +423,39 @@ BigViewImage.prototype.deactivate = function(){
   this.thumbnail.classList.remove('bv-active');
 }
 
+BigViewImage.prototype.prepare = function(){
+  if (this.bigView.descriptionEnabled){
+    this.showDescription();
+  }
+  else{
+    this.hideDescription();
+  }
+}
+
 BigViewImage.prototype.setDescription = function(desc){
   this.description.innerHTML = desc;
+}
+
+BigViewImage.prototype.hideDescription = function(){
+  var height = this.description.clientHeight;
+  this.descriptionDisplayed = false;
+  this.description.style.transform = "translateY(" + height + "px)";
+  this.description.style.display = "none";
+}
+
+BigViewImage.prototype.showDescription = function(){
+  this.descriptionDisplayed = true;
+  this.description.style.transform = "translateY(" + 0 + "px)";
+  this.description.style.display = null;
+}
+
+BigViewImage.prototype.toggleDescription = function(){
+  if(this.descriptionDisplayed || this.descriptionDisplayed == null){
+    this.hideDescription();
+  }
+  else{
+    this.showDescription();
+  }
 }
 
 BigViewImage.prototype.next = function(){
