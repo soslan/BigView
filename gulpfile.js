@@ -1,9 +1,7 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 
-gulp.task('default', function() {
-	
-});
+gulp.task('default', ['js', 'sass']);
 
 gulp.task('js', function(){
   gulp.src('./src/*.js')
