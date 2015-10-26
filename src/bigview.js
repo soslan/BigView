@@ -277,6 +277,7 @@ BigView.prototype.addImages = function(images){
         var img = new BigViewImage({
           bigView: self,
           src: elem.src,
+          description: elem.alt,
         });
         self.images.push(img);
         if(typeof elem.bigViews !== "object"){
@@ -348,6 +349,8 @@ function BigViewImage(args){
     parent: this.bigView.gallery,
   });
 
+  this.setDescription(args.description);
+
   this.thumbnail.bigViewObject = this;
 }
 
@@ -359,6 +362,10 @@ BigViewImage.prototype.activate = function(){
 BigViewImage.prototype.deactivate = function(){
   this.container.classList.remove('bv-active');
   this.thumbnail.classList.remove('bv-active');
+}
+
+BigViewImage.prototype.setDescription = function(desc){
+  this.description.innerHTML = desc;
 }
 
 BigViewImage.prototype.next = function(){

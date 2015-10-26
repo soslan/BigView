@@ -108,6 +108,22 @@ $bar-height: 32px;
     left: 0;
     right: 0;
   }
+
+  & > .bv-desc{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    font-size: xx-large;
+    opacity: 0.6;
+
+    &:empty{
+      display: none;
+    }
+  }
 }
 
 .bv-gallery{
