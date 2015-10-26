@@ -64,6 +64,16 @@ function BigView(){
     }
   });
 
+  this.slideshowButton = e({
+    class:'bv-button',
+    tag:'button',
+    parent:this.navigation,
+    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>',
+    action: function(e){
+      self.toggleInterval();
+    }
+  });
+
   this.nextButton = e({
     class:'bv-button',
     tag:'button',
@@ -315,6 +325,33 @@ BigView.prototype.setGallery = function(images){
     };
     self.images[dest.src] = obj;
   });
+}
+
+BigView.prototype.startSlideshow = function(){
+  var self = this;
+  if(this.slideshowInterval != null){
+    clearInterval( this.slideshowInterval );
+  }
+  this.slideshowButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  this.slideshowInterval = window.setInterval(function(){
+    self.next();
+  }, 2000);
+}
+
+BigView.prototype.stopSlideshow = function(){
+  var self = this;
+  this.slideshowButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  clearInterval( this.slideshowInterval );
+  this.slideshowInterval = null;
+}
+
+BigView.prototype.toggleInterval = function(){
+  if(this.slideshowInterval == null){
+    this.startSlideshow();
+  }
+  else{
+    this.stopSlideshow();
+  }
 }
 
 function BigViewImage(args){
