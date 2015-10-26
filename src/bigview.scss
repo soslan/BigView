@@ -17,6 +17,20 @@ $bar-height: 32px;
   -webkit-user-select: none;
   -ms-user-select: none;
   transition: opacity $animation-duration, transform $animation-duration;
+
+  &.bv-no-gallery{
+    & > .bv-gallery{
+      display: none;
+    }
+
+    & > .bv-navigation{
+      bottom: 0;
+    }
+
+    & > .bv-body{
+      bottom: 32px;
+    }
+  }
 }
 
 .bv-toolbar{
