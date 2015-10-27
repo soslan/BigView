@@ -96,6 +96,22 @@ $bar-height: 32px;
   right: 0;
   left: 0;
   transform: translateZ(0);
+
+  & > .bv-nav-r{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom:0;
+    height: 32px;
+  }
+
+  & > .bv-nav-l{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:0;
+    height: 32px;
+  }
 }
 
 .bv-body{

@@ -54,6 +54,16 @@ function BigView(){
     parent: this.container,
   });
 
+  this.navigationRight = e({
+    class: 'bv-nav-r',
+    parent: this.navigation,
+  });
+
+  this.navigationLeft = e({
+    class: 'bv-nav-l',
+    parent: this.navigation,
+  });
+
   this.prevButton = e({
     class:'bv-button',
     tag:'button',
@@ -87,7 +97,7 @@ function BigView(){
   this.descButton = e({
     class:'bv-button bv-desc-button bv-toggle-button',
     tag:'button',
-    parent:this.navigation,
+    parent:this.navigationRight,
     content:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>',
     action: function(e){
       self.toggleDescription();
