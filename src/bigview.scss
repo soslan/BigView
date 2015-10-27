@@ -65,6 +65,23 @@ $bar-height: 32px;
     opacity: 1;
     outline: none;
   }
+
+  &.bv-toggle-button{
+    opacity: 0.4;
+
+    &:focus,
+    &:active{
+      opacity: 0.4;
+    }
+
+    &:hover{
+      opacity: 0.7;
+    }
+
+    &.bv-on{
+      opacity: 1;
+    }
+  }
 }
 
 .bv-close{

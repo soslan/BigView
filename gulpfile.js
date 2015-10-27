@@ -10,7 +10,7 @@ gulp.task('js', function(){
 
 gulp.task('sass', function(){
   gulp.src('./src/*.scss')
-    .pipe(sass())
+    .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./dist'));
 });
 

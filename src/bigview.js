@@ -85,7 +85,7 @@ function BigView(){
   });
 
   this.descButton = e({
-    class:'bv-button bv-desc-button',
+    class:'bv-button bv-desc-button bv-toggle-button',
     tag:'button',
     parent:this.navigation,
     content:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>',
@@ -340,13 +340,23 @@ BigView.prototype.setGallery = function(images){
 
 BigView.prototype.toggleDescription = function(){
   if(this.descriptionEnabled){
-    this.descriptionEnabled = false;
-    this.current.hideDescription();
+    this.hideDescription();
   }
   else{
-    this.descriptionEnabled = true;
-    this.current.showDescription();
+    this.showDescription();
   }
+}
+
+BigView.prototype.showDescription = function(){
+  this.descriptionEnabled = true;
+  this.descButton.classList.add('bv-on');
+  this.current.showDescription();
+}
+
+BigView.prototype.hideDescription = function(){
+  this.descriptionEnabled = false;
+  this.descButton.classList.remove('bv-on');
+  this.current.hideDescription();
 }
 
 BigView.prototype.startSlideshow = function(){
