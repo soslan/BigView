@@ -201,50 +201,6 @@ BigView.prototype.hide = function(){
   this.stopSlideshow();
 }
 
-BigView.prototype.getImageObj = function(arg){
-  if(typeof arg === "string"){
-    return this.images[arg];
-  }
-  else if(typeof arg === "number"){
-    if(arg >= this.imageKeys.length){
-      return this.getImageObj(arg - this.imageKeys.length);
-    }
-    else if(arg < 0){
-      return this.getImageObj(arg + this.imageKeys.length);
-    }
-    else{
-      return this.getImageObj(this.imageKeys[arg]);
-    }   
-  }
-  else if(arg === this.images[arg.src]){
-    return arg;
-  }
-}
-
-BigView.prototype.prepareImage = function(obj){
-  var self = this;
-  obj = this.getImageObj(obj);
-  if (obj == null){
-    return;
-  }
-  if(obj.big == null){
-    obj.big = e({
-      tag: 'img',
-      class: 'bv-image',
-      action: function(e){
-        self.next();
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    });
-    obj.big.src = obj.src;
-    obj.big.style.opacity = 0; // 0.01
-    //obj.big.style.visibility = 'hidden';
-    obj.big.style.zIndex = 0;
-    this.body.appendChild(obj.big);
-  }
-}
-
 BigView.prototype.fixGalleryPosition = function(){
   if (this.current == null){
     return;
@@ -255,9 +211,7 @@ BigView.prototype.fixGalleryPosition = function(){
   var galleryPos = this.gallery.offsetLeft;
   var elemAbsPos = elemPos + galleryPos;
   var desiredPos = ( contWidth / 2 ) - ( imgWidth / 2 );
-
   var shift = elemAbsPos - desiredPos;
-
   this.gallery.style.transform = 'translateX('+ (galleryPos - shift) +'px)';
 }
 
@@ -299,8 +253,6 @@ BigView.prototype.setImage = function(img){
     var old = this.current;
     this.current = img;
     this.fixGalleryPosition();
-
-    //img.container.classList.add('bv-active');
     img.prepare();
     img.activate();
 
@@ -309,14 +261,7 @@ BigView.prototype.setImage = function(img){
 
     if(old != null && old != img){
       old.deactivate();
-      //old.container.classList.remove('bv-active');
-      // old.big.style.opacity = 0;
-      // //old.big.style.visibility = 'hidden';
-      // old.big.style.zIndex = 0;
     }
-    // this.current.big.style.opacity = 1;
-    // this.current.big.style.visibility = null;
-    // this.current.big.style.zIndex = 1;
   }
 }
 
@@ -348,32 +293,6 @@ BigView.prototype.addImages = function(images){
       }
     });
   }
-}
-
-BigView.prototype.setGallery = function(images){
-  var self = this;
-  this.gallery.innerHTML = '';
-  this.images = {};
-  this.imageKeys = [];
-
-  images.each(function(i,v){
-    if( self.images[v.src] !== undefined){
-      return;
-    } 
-    var dest = e({
-      tag: 'img',
-      parent: self.gallery,
-    });
-    dest.src = v.src;
-    self.imageKeys.push(dest.src);
-    var obj = {
-      src: dest.src,
-      elem: dest,
-      desc: v.alt,
-      i: self.imageKeys.length - 1,
-    };
-    self.images[dest.src] = obj;
-  });
 }
 
 BigView.prototype.toggleGallery = function(){
