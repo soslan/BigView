@@ -427,7 +427,7 @@ BigView.prototype.startSlideshow = function(){
   if(this.slideshowInterval != null){
     clearInterval( this.slideshowInterval );
   }
-  this.slideshowButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  this.slideshowButton.querySelector("path").setAttribute("d", "M6 19h4V5H6v14zm8-14v14h4V5h-4z");
   this.slideshowInterval = window.setInterval(function(){
     self.next();
   }, 2000);
@@ -435,7 +435,7 @@ BigView.prototype.startSlideshow = function(){
 
 BigView.prototype.stopSlideshow = function(){
   var self = this;
-  this.slideshowButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  this.slideshowButton.querySelector("path").setAttribute("d", "M8 5v14l11-7z");
   clearInterval( this.slideshowInterval );
   this.slideshowInterval = null;
 }
