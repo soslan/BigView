@@ -1,8 +1,8 @@
 'use strict';
 
-function BigView(){
+function BigView(args){
   var self = this;
-
+  args = args || {};
   this.container = e({
     class: 'bv-container',
   });
@@ -110,8 +110,7 @@ function BigView(){
     parent:this.navigationRight,
     content:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>',
     action: function(e){
-      self.container.classList.toggle("bv-no-gallery");
-      self.galleryButton.classList.toggle("bv-on");
+      self.toggleGallery();
     }
   });
 
@@ -133,6 +132,13 @@ function BigView(){
       self.hide();
     }
   });
+
+  if(args.showGallery === undefined || args.showGallery == true){
+    this.showGallery();
+  }
+  else{
+    this.hideGallery();
+  }
 
   // Centering active thumbnail on resize.
   var resizeRunning = false;
@@ -232,6 +238,9 @@ BigView.prototype.prepareImage = function(obj){
 }
 
 BigView.prototype.fixGalleryPosition = function(){
+  if (this.current == null){
+    return;
+  }
   var contWidth = window.innerWidth;
   var imgWidth = this.current.thumbnail.clientWidth;
   var elemPos = this.current.thumbnail.offsetLeft;
@@ -357,6 +366,28 @@ BigView.prototype.setGallery = function(images){
     };
     self.images[dest.src] = obj;
   });
+}
+
+BigView.prototype.toggleGallery = function(){
+  if(this.galleryDisplayed){
+    this.hideGallery();
+  }
+  else{
+    this.showGallery();
+  }
+}
+
+BigView.prototype.showGallery = function(){
+  this.galleryDisplayed = true;
+  this.galleryButton.classList.add('bv-on');
+  this.container.classList.remove('bv-no-gallery');
+  this.fixGalleryPosition();
+}
+
+BigView.prototype.hideGallery = function(){
+  this.galleryDisplayed = false;
+  this.galleryButton.classList.remove('bv-on');
+  this.container.classList.add('bv-no-gallery');
 }
 
 BigView.prototype.toggleDescription = function(){

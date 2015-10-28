@@ -20,7 +20,8 @@ $bar-height: 32px;
 
   &.bv-no-gallery{
     & > .bv-gallery{
-      display: none;
+      bottom: -90px;
+      //display: none;
     }
 
     & > .bv-navigation{
@@ -95,6 +96,7 @@ $bar-height: 32px;
   bottom: 90px;
   right: 0;
   left: 0;
+  transition: bottom $animation-duration;
   transform: translateZ(0);
 
   & > .bv-nav-r{
@@ -123,6 +125,7 @@ $bar-height: 32px;
   overflow: hidden;
   //height: 100%;
   width: 100%;
+  transition: bottom $animation-duration;
 }
 
 .bv-img-cont{
@@ -186,10 +189,6 @@ $bar-height: 32px;
   }
 }
 
-.bv-desc-button{
-  float: right;
-}
-
 .bv-gallery{
   white-space: nowrap;
   overflow: hidden;
@@ -201,7 +200,7 @@ $bar-height: 32px;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  transition: transform $animation-duration;
+  transition: transform $animation-duration, bottom $animation-duration;
   transform: translateZ(0);
 }
 
