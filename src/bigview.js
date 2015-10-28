@@ -140,6 +140,13 @@ function BigView(args){
     this.hideGallery();
   }
 
+  if(args.showDescription === undefined || args.showDescription == true){
+    this.showDescription();
+  }
+  else{
+    this.hideDescription();
+  }
+
   // Centering active thumbnail on resize.
   var resizeRunning = false;
   window.addEventListener('resize', function(){
@@ -402,13 +409,17 @@ BigView.prototype.toggleDescription = function(){
 BigView.prototype.showDescription = function(){
   this.descriptionEnabled = true;
   this.descButton.classList.add('bv-on');
-  this.current.showDescription();
+  if(this.current != null){
+    this.current.showDescription();
+  }
 }
 
 BigView.prototype.hideDescription = function(){
   this.descriptionEnabled = false;
   this.descButton.classList.remove('bv-on');
-  this.current.hideDescription();
+    if(this.current != null){
+    this.current.hideDescription();
+  }
 }
 
 BigView.prototype.startSlideshow = function(){
