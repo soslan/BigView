@@ -198,6 +198,7 @@ BigView.prototype.hide = function(){
   document.body.style.overflow = null;
   this.container.style.opacity = 0;
   this.container.style.zIndex = -100;
+  this.stopSlideshow();
 }
 
 BigView.prototype.getImageObj = function(arg){
@@ -434,10 +435,12 @@ BigView.prototype.startSlideshow = function(){
 }
 
 BigView.prototype.stopSlideshow = function(){
-  var self = this;
-  this.slideshowButton.querySelector("path").setAttribute("d", "M8 5v14l11-7z");
-  clearInterval( this.slideshowInterval );
-  this.slideshowInterval = null;
+  if(this.slideshowInterval != null){
+    var self = this;
+    this.slideshowButton.querySelector("path").setAttribute("d", "M8 5v14l11-7z");
+    clearInterval( this.slideshowInterval );
+    this.slideshowInterval = null;
+  }
 }
 
 BigView.prototype.toggleInterval = function(){
