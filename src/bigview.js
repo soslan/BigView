@@ -68,7 +68,7 @@ function BigView(args){
     class:'bv-button',
     tag:'button',
     parent:this.navigation,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>',
+    content: icon("M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"),
     action: function(e){
       self.prev();
     }
@@ -78,7 +78,7 @@ function BigView(args){
     class:'bv-button',
     tag:'button',
     parent:this.navigation,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>',
+    content: icon("M8 5v14l11-7z"),
     action: function(e){
       self.toggleInterval();
     }
@@ -88,7 +88,7 @@ function BigView(args){
     class:'bv-button',
     tag:'button',
     parent:this.navigation,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>',
+    content: icon("M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"),
     action: function(e){
       self.next();
     }
@@ -98,7 +98,7 @@ function BigView(args){
     class:'bv-button bv-desc-button bv-toggle-button',
     tag:'button',
     parent:this.navigationRight,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>',
+    content: icon("M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"),
     action: function(e){
       self.toggleDescription();
     }
@@ -108,7 +108,7 @@ function BigView(args){
     class:'bv-button bv-gallery-button bv-toggle-button bv-on',
     tag:'button',
     parent:this.navigationRight,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>',
+    content: icon("M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"),
     action: function(e){
       self.toggleGallery();
     }
@@ -127,7 +127,7 @@ function BigView(args){
     class:'bv-button bv-close',
     tag:'button',
     parent:this.toolbar,
-    content:'<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="32" viewBox="0 0 24 24" width="32"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>',
+    content: icon("M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"),
     action: function(e){
       self.hide();
     }
@@ -545,6 +545,20 @@ Object.defineProperty(BigViewImage.prototype, 'i', {
   }
 });
 
+function icon(arg){
+  var element = document.createElementNS("http://www.w3.org/2000/svg","svg");
+  var path = document.createElementNS("http://www.w3.org/2000/svg","path");
+  element.classList.add("bv-icon");
+  element.setAttribute("viewBox", "0 0 24 24");
+  element.appendChild(path);
+  path.setAttribute("d", arg);
+  return element;
+}
+
+icon.paths = {
+  "play": "M8 5v14l11-7z",
+};
+
 function e(args){
   args = args || {};
 
@@ -557,6 +571,9 @@ function e(args){
 
   if(typeof args.content === "string" || typeof args.content === "number"){
     element.innerHTML = args.content;
+  }
+  else if(args.content instanceof Node){
+    element.appendChild(args.content);
   }
 
   if(args.parent instanceof HTMLElement){
