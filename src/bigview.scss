@@ -189,6 +189,16 @@ $bar-height: 32px;
   }
 }
 
+.bv-counter{
+  color: white;
+  line-height: 32px;
+  font-size: 20px;
+
+  & > .bv-counter-current:after{
+    content: " / ";
+  }
+}
+
 .bv-gallery{
   white-space: nowrap;
   overflow: hidden;

@@ -114,6 +114,24 @@ function BigView(args){
     }
   });
 
+  this.counter = e({
+    tag: 'span',
+    class: 'bv-counter',
+    parent: this.navigationLeft,
+  });
+
+  this.counterCurrent = e({
+    tag: 'span',
+    class: 'bv-counter-current',
+    parent: this.counter,
+  });
+
+  this.counterAll = e({
+    tag: 'span',
+    class: 'bv-counter-all',
+    parent: this.counter,
+  });
+
   this.gallery = e({
     tag:'div',
     class:'bv-gallery',
@@ -252,6 +270,7 @@ BigView.prototype.setImage = function(img){
   if(img instanceof BigViewImage){
     var old = this.current;
     this.current = img;
+    this.counterCurrent.innerHTML = img.i + 1;
     this.fixGalleryPosition();
     img.prepare();
     img.activate();
@@ -284,6 +303,7 @@ BigView.prototype.addImages = function(images){
           description: elem.alt,
         });
         self.images.push(img);
+        self.counterAll.innerHTML = self.images.length;
         if(typeof elem.bigViews !== "object"){
           elem.bigViews = {};
         }
