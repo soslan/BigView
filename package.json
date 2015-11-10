@@ -8,10 +8,11 @@
   },
   "devDependencies": {
     "gulp": "~3.9.0",
+    "gulp-jscs": "^3.0.2",
     "gulp-sass": "~2.0.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "BSD"
+  "license": "MIT"
 }
