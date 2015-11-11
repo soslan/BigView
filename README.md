@@ -17,7 +17,7 @@ The BigView files should now be located in the 'dist/' directory.
 Include `bigview.css` and `bigview.js` from the `dist/` directory in your HTML file.
 
 Create a BigView instance and add some images to it (for now it only supports JQuery objects).
-`
+```javascript
 // Creating BigView instance
 var myBigView = new BigView();
 
@@ -28,7 +28,7 @@ myBigView.addImages($('#my-gallery > img'));
 $('#my-gallery > img').click(function(e){
   myBigView.show(e);
 });
-`
+```
 
 ## License
 
