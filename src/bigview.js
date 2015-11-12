@@ -286,24 +286,30 @@ BigView.prototype.prev = function() {
   this.setImage( this.current.i - 1 );
 };
 
+BigView.prototype.addImgElement = function(elem) {
+  if ( elem.tagName.toLowerCase() === "img" ) {
+    var img = new BigViewImage({
+      bigView: self,
+      src: elem.src,
+      description: elem.alt
+    });
+    self.images.push( img );
+    self.counterAll.innerHTML = self.images.length;
+    if ( typeof elem.bigViews !== "object" ) {
+      elem.bigViews = {};
+    }
+    elem.bigViews[ self.id ] = img;
+
+    self.body.appendChild( img.container );
+  }
+};
+
 BigView.prototype.addImages = function( images ) {
   var self = this;
   if ( images.jquery ) {
     images.each(function( i, elem ) {
       if ( elem.tagName.toLowerCase() === "img" ) {
-        var img = new BigViewImage({
-          bigView: self,
-          src: elem.src,
-          description: elem.alt
-        });
-        self.images.push( img );
-        self.counterAll.innerHTML = self.images.length;
-        if ( typeof elem.bigViews !== "object" ) {
-          elem.bigViews = {};
-        }
-        elem.bigViews[ self.id ] = img;
-
-        self.body.appendChild( img.container );
+        self.addImgElement(elem);
       }
     });
   }
