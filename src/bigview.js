@@ -286,7 +286,7 @@ BigView.prototype.prev = function() {
   this.setImage( this.current.i - 1 );
 };
 
-BigView.prototype.addImgElement = function(elem) {
+BigView.prototype.addImgElement = function( elem ) {
   var self = this;
   if ( elem.tagName.toLowerCase() === "img" ) {
     var img = new BigViewImage({
@@ -310,9 +310,13 @@ BigView.prototype.addImages = function( images ) {
   if ( images.jquery ) {
     images.each(function( i, elem ) {
       if ( elem.tagName.toLowerCase() === "img" ) {
-        self.addImgElement(elem);
+        self.addImgElement( elem );
       }
     });
+  } else if ( images instanceof NodeList ) {
+    for ( var i = 0; i < images.length; i++ ) {
+      self.addImgElement( images[ i ] );
+    }
   }
 };
 
