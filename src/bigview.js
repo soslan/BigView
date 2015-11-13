@@ -287,6 +287,7 @@ BigView.prototype.prev = function() {
 };
 
 BigView.prototype.addImgElement = function(elem) {
+  var self = this;
   if ( elem.tagName.toLowerCase() === "img" ) {
     var img = new BigViewImage({
       bigView: self,
