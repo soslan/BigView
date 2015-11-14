@@ -300,10 +300,22 @@ BigView.prototype.addImgElement = function( elem ) {
       elem.bigViews = {};
     }
     elem.bigViews[ self.id ] = img;
-
     self.body.appendChild( img.container );
   }
 };
+
+BigView.prototype.addImageSource = function( src ) {
+  var self = this;
+  if ( typeof src === "string" ) {
+    var img = new BigViewImage({
+      src: src,
+      bigView: self
+    });
+    self.images.push( img );
+    self.counterAll.innerHTML = self.images.length;
+    self.body.appendChild( img.container );
+  }
+}
 
 BigView.prototype.addImages = function( images ) {
   var self = this;
