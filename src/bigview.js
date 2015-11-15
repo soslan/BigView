@@ -294,11 +294,15 @@ BigView.prototype.addImgElement = function( elem ) {
       src: elem.src,
       description: elem.alt
     });
+    elem.addEventListener( "click", function( e ) {
+      self.show( e.target );
+    });
     self.images.push( img );
     self.counterAll.innerHTML = self.images.length;
     if ( typeof elem.bigViews !== "object" ) {
       elem.bigViews = {};
     }
+    elem.bigView = self;
     elem.bigViews[ self.id ] = img;
     self.body.appendChild( img.container );
   }
@@ -315,7 +319,7 @@ BigView.prototype.addImageSource = function( src ) {
     self.counterAll.innerHTML = self.images.length;
     self.body.appendChild( img.container );
   }
-}
+};
 
 BigView.prototype.addImages = function( images ) {
   var self = this;

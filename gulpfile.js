@@ -22,5 +22,5 @@ gulp.task('sass:watch', function () {
 gulp.task('jscs', function(){
   gulp.src('./src/*.js')
     .pipe(jscs())
-    .pipe(jscs.reporter());
+    .pipe(jscs.reporter('text'));
 });
