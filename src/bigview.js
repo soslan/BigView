@@ -466,6 +466,7 @@ BigViewImage.prototype.prepare = function() {
 };
 
 BigViewImage.prototype.setDescription = function( desc ) {
+  desc = desc || "";
   this.description.innerHTML = desc;
 };
 
