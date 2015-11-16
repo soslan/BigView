@@ -323,9 +323,9 @@ BigView.prototype.addImageSource = function( src ) {
 
 BigView.prototype.addSelector = function( selector ) {
   if ( typeof selector === "string" ) {
-    this.add( document.querySelectorAll( selector ));
+    this.add( document.querySelectorAll( selector ) );
   }
-}
+};
 
 BigView.prototype.add = function( images ) {
   var self = this;
