@@ -327,18 +327,22 @@ BigView.prototype.addSelector = function( selector ) {
   }
 };
 
-BigView.prototype.add = function( images ) {
+BigView.prototype.add = function( arg ) {
   var self = this;
-  if ( images.jquery ) {
-    images.each(function( i, elem ) {
+  if ( arg.jquery ) {
+    arg.each(function( i, elem ) {
       if ( elem.tagName.toLowerCase() === "img" ) {
         self.addImgElement( elem );
       }
     });
-  } else if ( images instanceof NodeList ) {
-    for ( var i = 0; i < images.length; i++ ) {
-      self.addImgElement( images[ i ] );
+  } else if ( arg instanceof NodeList ) {
+    for ( var i = 0; i < arg.length; i++ ) {
+      self.addImgElement( arg[ i ] );
     }
+  } else if ( arg instanceof Node ) {
+    self.addImgElement( arg );
+  } else if ( typeof arg === "string" ) {
+    self.addSelector( arg );
   }
 };
 
