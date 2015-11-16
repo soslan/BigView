@@ -321,7 +321,13 @@ BigView.prototype.addImageSource = function( src ) {
   }
 };
 
-BigView.prototype.addImages = function( images ) {
+BigView.prototype.addSelector = function( selector ) {
+  if ( typeof selector === "string" ) {
+    this.add( document.querySelectorAll( selector ));
+  }
+}
+
+BigView.prototype.add = function( images ) {
   var self = this;
   if ( images.jquery ) {
     images.each(function( i, elem ) {
@@ -335,6 +341,8 @@ BigView.prototype.addImages = function( images ) {
     }
   }
 };
+
+BigView.prototype.addImages = BigView.prototype.add;
 
 BigView.prototype.toggleGallery = function() {
   if ( this.galleryDisplayed ) {
