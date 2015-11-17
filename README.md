@@ -26,6 +26,16 @@ myBigView.addImages( $( '#my-gallery > img' ) );
 ```
 Click on one of the added images should now open the viewer.
 
+## API (Not completed)
+
+### BigView(args)
+
+The BigView class represents a viewer with its own images and settings.
+
+#### .add(arg)
+
+Argument `arg` can be either JQuery object, NodeList, Stirng representing a selector or a Node.
+
 ## License
 
 See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
