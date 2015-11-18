@@ -30,11 +30,23 @@ Click on one of the added images should now open the viewer.
 
 ### BigView(args)
 
-The BigView class represents a viewer with its own images and settings.
+The BigView class represents a viewer with its own images and settings. The following is a basic example of creating a new viewer.
+```javascript
+var myViewer = new BigView();
+```
+The `BigView()` constructor accepts one argument which should be an object with properties representing different settings. Some of the settings are listed below.
+
+##### args.showDescription
+
+Should be `true` or `false`. Sets whever image description will be displayed initially or not.
+
+##### args.showGallery
+
+Should be `true` or `false`. Sets whever gallery will be displayed initially or not.
 
 #### .add(arg)
 
-Argument `arg` can be either JQuery object, NodeList, Stirng representing a selector or a Node.
+Argument `arg` can be JQuery object, NodeList, Stirng representing a selector or a Node.
 
 ## License
 
