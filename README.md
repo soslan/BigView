@@ -38,11 +38,11 @@ The `BigView()` constructor accepts one argument which should be an object with 
 
 ##### args.showDescription
 
-Should be `true` or `false`. Sets whever image description will be displayed initially or not.
+A Boolean setting whether to display image description or not.
 
 ##### args.showGallery
 
-Should be `true` or `false`. Sets whever gallery will be displayed initially or not.
+A Boolean setting whether to display gallery or not.
 
 #### .add(arg)
 
