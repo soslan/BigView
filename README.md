@@ -46,7 +46,28 @@ A Boolean setting whether to display gallery or not.
 
 #### .add(arg)
 
-Argument `arg` can be JQuery object, NodeList, Stirng representing a selector or a Node.
+Adds images to the viewer.
+
+Argument `arg` should be an `<img>` element, JQuery object, [NodeList](https://developer.mozilla.org/en/docs/Web/API/NodeList) or Stirng representing a selector (as in [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)).
+
+If `arg` is a JQuery object or NodeList then its `<img>` elements will be added. It is equivalent to adding the `<img>` elements in `arg` by one.
+
+If `arg` is a selector String then the result is equivalent to adding `document.querySelectorAll( arg )`.
+
+Below are the basic examples of adding image to viewer assuming its ```id``` is "my-img"
+```javascript
+var myViewer = new BigView(); // creating a viewer
+var imgElement = document.getElementById( "my-img" );
+
+// Adding <img> element
+myViewer.add( imgElement );
+// Adding JQuery object with <img> elements
+myViewer.add( $("#my-img") );
+// Adding NodeList
+myViewer.add( document.querySelectorAll("#my-img") );
+// Adding images by selector
+myViewer.add( "#my-img" );
+```
 
 ## License
 
