@@ -286,6 +286,14 @@ BigView.prototype.prev = function() {
   this.setImage( this.current.i - 1 );
 };
 
+BigView.prototype.addBigViewImage = function( img ) {
+  if ( img instanceof BigViewImage ) {
+    this.images.push( img );
+    this.counterAll.innerHTML = this.images.length;
+    this.body.appendChild( img.container );
+  }
+};
+
 BigView.prototype.addImgElement = function( elem ) {
   var self = this;
   if ( elem.tagName.toLowerCase() === "img" ) {
@@ -343,6 +351,12 @@ BigView.prototype.add = function( arg ) {
     self.addImgElement( arg );
   } else if ( typeof arg === "string" ) {
     self.addSelector( arg );
+  } else if ( typeof arg === "object" ) {
+    self.addBigViewImage( new BigViewImage({
+      bigView: self,
+      src: arg.src,
+      description: arg.description
+    }) );
   }
 };
 
