@@ -302,17 +302,15 @@ BigView.prototype.addImgElement = function( elem ) {
       src: elem.src,
       description: elem.alt
     });
+    self.addBigViewImage( img );
     elem.addEventListener( "click", function( e ) {
       self.show( e.target );
     });
-    self.images.push( img );
-    self.counterAll.innerHTML = self.images.length;
     if ( typeof elem.bigViews !== "object" ) {
       elem.bigViews = {};
     }
     elem.bigView = self;
     elem.bigViews[ self.id ] = img;
-    self.body.appendChild( img.container );
   }
 };
 
@@ -323,9 +321,7 @@ BigView.prototype.addImageSource = function( src ) {
       src: src,
       bigView: self
     });
-    self.images.push( img );
-    self.counterAll.innerHTML = self.images.length;
-    self.body.appendChild( img.container );
+    self.addBigViewImage( img );
   }
 };
 
