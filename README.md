@@ -48,11 +48,15 @@ A Boolean setting whether to display gallery or not.
 
 Adds images to the viewer.
 
-Argument `arg` should be an `<img>` element, JQuery object, [NodeList](https://developer.mozilla.org/en/docs/Web/API/NodeList) or Stirng representing a selector (as in [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)).
+Argument `arg` should be an `<img>` element, JQuery object, [NodeList](https://developer.mozilla.org/en/docs/Web/API/NodeList), Stirng representing a selector (as in [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)) or Object representing image.
 
-If `arg` is a JQuery object or NodeList then its `<img>` elements will be added. It is equivalent to adding the `<img>` elements in `arg` by one.
+If `arg` is a **JQuery object** or **NodeList** then its `<img>` elements will be added. It is equivalent to adding the `<img>` elements in `arg` by one.
 
-If `arg` is a selector String then the result is equivalent to adding `document.querySelectorAll( arg )`.
+If `arg` is a **String** then the result is equivalent to adding `document.querySelectorAll( arg )`.
+
+If `arg` is an **Object** then image defined by the object properties. The following properties are understood by the function:
+* **src** - URI of the image
+* **description** - description of the image
 
 Below are the basic examples of adding image to viewer assuming its ```id``` is "my-img"
 ```javascript
