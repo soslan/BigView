@@ -22,7 +22,7 @@ Create a BigView instance and add some images to it. Below is a basic example.
 var myBigView = new BigView();
 
 // Adding images by selector
-myBigView.addImages( $( '#my-gallery > img' ) );
+myBigView.addImages( $("#my-gallery > img") );
 ```
 Click on one of the added images should now open the viewer.
 
@@ -61,7 +61,7 @@ If `arg` is an **Object** then image defined by the object properties. The follo
 Below are the basic examples of adding image to viewer assuming its ```id``` is "my-img"
 ```javascript
 var myViewer = new BigView(); // creating a viewer
-var imgElement = document.getElementById( "my-img" );
+var imgElement = document.getElementById("my-img");
 
 // Adding <img> element
 myViewer.add( imgElement );
@@ -70,7 +70,7 @@ myViewer.add( $("#my-img") );
 // Adding NodeList
 myViewer.add( document.querySelectorAll("#my-img") );
 // Adding images by selector
-myViewer.add( "#my-img" );
+myViewer.add("#my-img");
 // Adding image by Object
 myViewer.add({
   src: "path/to/image.jpg",
