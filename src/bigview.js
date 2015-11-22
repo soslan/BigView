@@ -103,18 +103,6 @@ function BigView( args ) {
     }
   });
 
-  this.galleryButton = e({
-    class:"bv-button bv-gallery-button bv-toggle-button bv-on",
-    tag:"button",
-    parent:this.navigationRight,
-    content: icon( "M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-" +
-        "4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-" +
-        "4v4zm0 6h4v-4h-4v4z" ),
-    action: function( e ) {
-      self.toggleGallery();
-    }
-  });
-
   this.counter = e({
     tag: "span",
     class: "bv-counter",
@@ -133,15 +121,6 @@ function BigView( args ) {
     parent: this.counter
   });
 
-  this.gallery = e({
-    tag:"div",
-    class:"bv-gallery",
-    parent: this.container,
-    action: function( e ) {
-      self.setImage( e.target );
-    }
-  });
-
   this.closeButton = e({
     class:"bv-button bv-close",
     tag:"button",
@@ -153,10 +132,35 @@ function BigView( args ) {
     }
   });
 
-  if ( args.showGallery === undefined || args.showGallery == true ) {
-    this.showGallery();
+  if ( args.enableGallery === undefined || args.enableGallery == true ) {
+    this.galleryButton = e({
+      class:"bv-button bv-gallery-button bv-toggle-button bv-on",
+      tag:"button",
+      parent:this.navigationRight,
+      content: icon( "M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-" +
+          "4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-" +
+          "4v4zm0 6h4v-4h-4v4z" ),
+      action: function( e ) {
+        self.toggleGallery();
+      }
+    });
+
+    this.gallery = e({
+      tag:"div",
+      class:"bv-gallery",
+      parent: this.container,
+      action: function( e ) {
+        self.setImage( e.target );
+      }
+    });
+
+    if ( args.showGallery === undefined || args.showGallery == true ) {
+      this.showGallery();
+    } else {
+      this.hideGallery();
+    }
   } else {
-    this.hideGallery();
+    this.container.classList.add( "bv-no-gallery" );
   }
 
   if ( args.showDescription === undefined || args.showDescription == true ) {
@@ -220,7 +224,7 @@ BigView.prototype.hide = function() {
 };
 
 BigView.prototype.fixGalleryPosition = function() {
-  if ( this.current == null ) {
+  if ( this.current == null || this.gallery == null ) {
     return;
   }
   var contWidth = window.innerWidth;
