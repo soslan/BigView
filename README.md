@@ -71,6 +71,11 @@ myViewer.add( $("#my-img") );
 myViewer.add( document.querySelectorAll("#my-img") );
 // Adding images by selector
 myViewer.add( "#my-img" );
+// Adding image by Object
+myViewer.add({
+  src: "path/to/image.jpg",
+  description: "Description of the image"
+});
 ```
 
 ## License
