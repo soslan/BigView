@@ -95,18 +95,6 @@ function BigView( args ) {
     }
   });
 
-  this.descButton = e({
-    class:"bv-button bv-desc-button bv-toggle-button",
-    tag:"button",
-    parent:this.navigationRight,
-    content: icon( "M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 " +
-        "10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 " +
-        "3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z" ),
-    action: function( e ) {
-      self.toggleDescription();
-    }
-  });
-
   this.counter = e({
     tag: "span",
     class: "bv-counter",
@@ -165,6 +153,21 @@ function BigView( args ) {
     }
   } else {
     this.container.classList.add( "bv-no-gallery" );
+  }
+
+  if ( args.enableDescription === undefined ||
+       args.enableDescription == true ) {
+    this.descButton = e({
+      class:"bv-button bv-desc-button bv-toggle-button",
+      tag:"button",
+      parent:this.navigationRight,
+      content: icon( "M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 " +
+          "10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 " +
+          "3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z" ),
+      action: function( e ) {
+        self.toggleDescription();
+      }
+    });
   }
 
   if ( args.showDescription === undefined || args.showDescription == true ) {
@@ -392,13 +395,17 @@ BigView.prototype.toggleDescription = function() {
 
 BigView.prototype.showDescription = function() {
   this.descriptionEnabled = true;
-  this.descButton.classList.add( "bv-on" );
+  if ( this.descButton instanceof Node ) {
+    this.descButton.classList.add( "bv-on" );
+  }
   this.body.classList.remove("bv-no-desc");
 };
 
 BigView.prototype.hideDescription = function() {
   this.descriptionEnabled = false;
-  this.descButton.classList.remove( "bv-on" );
+  if ( this.descButton instanceof Node ) {
+    this.descButton.classList.remove( "bv-on" );
+  }
   this.body.classList.add("bv-no-desc");
 };
 
