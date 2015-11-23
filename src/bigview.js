@@ -274,12 +274,7 @@ BigView.prototype.setImage = function( img ) {
     this.current = img;
     this.counterCurrent.innerHTML = img.i + 1;
     this.fixGalleryPosition();
-    img.prepare();
     img.activate();
-
-    // self.prepareImage( obj.i + 1 );
-    // self.prepareImage( obj.i - 1 );
-
     if ( old != null && old != img ) {
       old.deactivate();
     }
@@ -491,10 +486,6 @@ BigViewImage.prototype.activate = function() {
 BigViewImage.prototype.deactivate = function() {
   this.container.classList.remove( "bv-active" );
   this.thumbnail.classList.remove( "bv-active" );
-};
-
-BigViewImage.prototype.prepare = function() {
-  // Empty for now
 };
 
 BigViewImage.prototype.setDescription = function( desc ) {
