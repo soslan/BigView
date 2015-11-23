@@ -81,6 +81,8 @@ function BigView( args ) {
         self.toggleInterval();
       }
     });
+
+    this.setSlideDuration( args.slideDuration );
   }
 
   this.nextButton = e({
@@ -409,6 +411,16 @@ BigView.prototype.hideDescription = function() {
   }
 };
 
+BigView.prototype.setSlideDuration = function( duration ) {
+  if ( typeof duration === "number" && duration > 0 ) {
+    this.slideDuration = duration;
+  } else {
+    this.slideDuration = BigView.slideDuration;
+  }
+};
+
+BigView.slideDuration = 2000;
+
 BigView.prototype.startSlideshow = function() {
   var self = this;
   if ( this.slideshowInterval != null ) {
@@ -418,7 +430,7 @@ BigView.prototype.startSlideshow = function() {
     .setAttribute( "d", "M6 19h4V5H6v14zm8-14v14h4V5h-4z" );
   this.slideshowInterval = window.setInterval(function() {
     self.next();
-  }, 2000 );
+  }, this.slideDuration );
 };
 
 BigView.prototype.stopSlideshow = function() {
