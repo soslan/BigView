@@ -398,17 +398,13 @@ BigView.prototype.toggleDescription = function() {
 BigView.prototype.showDescription = function() {
   this.descriptionEnabled = true;
   this.descButton.classList.add( "bv-on" );
-  if ( this.current != null ) {
-    this.current.showDescription();
-  }
+  this.body.classList.remove("bv-no-desc");
 };
 
 BigView.prototype.hideDescription = function() {
   this.descriptionEnabled = false;
   this.descButton.classList.remove( "bv-on" );
-    if ( this.current != null ) {
-    this.current.hideDescription();
-  }
+  this.body.classList.add("bv-no-desc");
 };
 
 BigView.prototype.setSlideDuration = function( duration ) {
@@ -498,37 +494,12 @@ BigViewImage.prototype.deactivate = function() {
 };
 
 BigViewImage.prototype.prepare = function() {
-  if ( this.bigView.descriptionEnabled ) {
-    this.showDescription();
-  } else {
-    this.hideDescription();
-  }
+  // Empty for now
 };
 
 BigViewImage.prototype.setDescription = function( desc ) {
   desc = desc || "";
   this.description.innerHTML = desc;
-};
-
-BigViewImage.prototype.hideDescription = function() {
-  var height = this.description.clientHeight;
-  this.descriptionDisplayed = false;
-  this.description.style.transform = "translateY( " + height + "px )";
-  this.description.style.display = "none";
-};
-
-BigViewImage.prototype.showDescription = function() {
-  this.descriptionDisplayed = true;
-  this.description.style.transform = "translateY( " + 0 + "px )";
-  this.description.style.display = null;
-};
-
-BigViewImage.prototype.toggleDescription = function() {
-  if ( this.descriptionDisplayed || this.descriptionDisplayed == null ) {
-    this.hideDescription();
-  } else {
-    this.showDescription();
-  }
 };
 
 BigViewImage.prototype.next = function() {

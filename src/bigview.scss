@@ -129,6 +129,10 @@ $bar-height: 32px;
   //height: 100%;
   width: 100%;
   transition: bottom $animation-duration;
+
+  &.bv-no-desc .bv-desc{
+    display: none;
+  }
 }
 
 .bv-img-cont{
