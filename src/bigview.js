@@ -71,15 +71,17 @@ function BigView( args ) {
     }
   });
 
-  this.slideshowButton = e({
-    class:"bv-button",
-    tag:"button",
-    parent:this.navigation,
-    content: icon( "M8 5v14l11-7z" ),
-    action: function( e ) {
-      self.toggleInterval();
-    }
-  });
+  if ( args.enableSlideshow == true ) {
+    this.slideshowButton = e({
+      class:"bv-button",
+      tag:"button",
+      parent:this.navigation,
+      content: icon( "M8 5v14l11-7z" ),
+      action: function( e ) {
+        self.toggleInterval();
+      }
+    });
+  }
 
   this.nextButton = e({
     class:"bv-button",
