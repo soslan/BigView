@@ -124,6 +124,15 @@ function BigView( args ) {
     }
   });
 
+  this.gallery = e({
+    tag:"div",
+    class:"bv-gallery",
+    parent: this.container,
+    action: function( e ) {
+      self.setImage( e.target );
+    }
+  });
+
   if ( args.enableGallery === undefined || args.enableGallery == true ) {
     this.galleryButton = e({
       class:"bv-button bv-gallery-button bv-toggle-button bv-on",
@@ -136,23 +145,14 @@ function BigView( args ) {
         self.toggleGallery();
       }
     });
-
-    this.gallery = e({
-      tag:"div",
-      class:"bv-gallery",
-      parent: this.container,
-      action: function( e ) {
-        self.setImage( e.target );
-      }
-    });
-
-    if ( args.showGallery === undefined || args.showGallery == true ) {
-      this.showGallery();
-    } else {
-      this.hideGallery();
-    }
   } else {
     this.container.classList.add( "bv-no-gallery" );
+  }
+
+  if ( args.showGallery === undefined || args.showGallery == true ) {
+    this.showGallery();
+  } else {
+    this.hideGallery();
   }
 
   if ( args.enableDescription === undefined ||
@@ -374,14 +374,18 @@ BigView.prototype.toggleGallery = function() {
 
 BigView.prototype.showGallery = function() {
   this.galleryDisplayed = true;
-  this.galleryButton.classList.add( "bv-on" );
+  if ( this.galleryButton instanceof Node ) {
+    this.galleryButton.classList.add( "bv-on" );
+  }
   this.container.classList.remove( "bv-no-gallery" );
   this.fixGalleryPosition();
 };
 
 BigView.prototype.hideGallery = function() {
   this.galleryDisplayed = false;
-  this.galleryButton.classList.remove( "bv-on" );
+  if ( this.galleryButton instanceof Node ) {
+    this.galleryButton.classList.remove( "bv-on" );
+  }
   this.container.classList.add( "bv-no-gallery" );
 };
 
