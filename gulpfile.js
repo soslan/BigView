@@ -1,11 +1,13 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var jscs = require('gulp-jscs');
+var uglify = require('gulp-uglify');
 
 gulp.task('default', ['js', 'sass']);
 
 gulp.task('js', function(){
   gulp.src('./src/*.js')
+    .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
 
