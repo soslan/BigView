@@ -40,9 +40,25 @@ The `BigView()` constructor accepts one argument which should be an object with 
 
 A Boolean setting whether to display image description or not.
 
+##### args.enableDescription
+
+A Boolean setting whether to add description button or not.
+
 ##### args.showGallery
 
 A Boolean setting whether to display gallery or not.
+
+##### args.enableGallery
+
+A Boolean setting whether to add gallery button or not.
+
+##### args.enableSlideshow
+
+A Boolean setting whether to add *start slideshow* button or not.
+
+##### args.slideDuration
+
+A Number setting how many miliseconds slides will last.
 
 #### .add(arg)
 
