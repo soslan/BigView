@@ -26,7 +26,7 @@ myBigView.addImages( $("#my-gallery > img") );
 ```
 Click on one of the added images should now open the viewer.
 
-## API (Not completed)
+## API
 
 ### BigView(args)
 
