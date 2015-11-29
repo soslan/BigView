@@ -1,0 +1,4 @@
+{
+	"preset": "idiomatic",
+	"maxErrors": 1000,
+}
