@@ -2,12 +2,17 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var jscs = require('gulp-jscs');
 var uglify = require('gulp-uglify');
+var rename = require("gulp-rename");
 
 gulp.task('default', ['js', 'sass']);
 
 gulp.task('js', function(){
   gulp.src('./src/*.js')
+    .pipe(gulp.dest('./dist'))
     .pipe(uglify())
+    .pipe(rename(function(path){
+      path.basename += ".min"
+    }))
     .pipe(gulp.dest('./dist'));
 });
 
