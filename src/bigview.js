@@ -247,7 +247,9 @@ BigView.prototype.fixGalleryPosition = function() {
 };
 
 BigView.prototype.getImageObject = function( arg ) {
-  if ( typeof arg === "number" ) {
+  if ( this.images.length === 0 ) {
+    return null;
+  } else if ( typeof arg === "number" ) {
     if ( arg >= this.images.length ) {
       return this.getImageObject( arg - this.images.length );
     } else if ( arg < 0 ) {
