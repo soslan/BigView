@@ -210,15 +210,17 @@ function BigView( args ) {
 };
 
 BigView.prototype.show = function( target ) {
+  this.displayed = true;
+  document.body.style.overflow = "hidden";
+  this.container.style.zIndex = 100;
+  this.container.style.opacity = 0;
+  this.container.style.display = "block";
+  this.container.focus();
+  this.container.style.opacity = 1;
   if ( target instanceof HTMLElement ) {
-    this.displayed = true;
-    document.body.style.overflow = "hidden";
-    this.container.style.zIndex = 100;
-    this.container.style.opacity = 0;
-    this.container.style.display = "block";
     this.setImage( target );
-    this.container.focus();
-    this.container.style.opacity = 1;
+  } else if ( this.current == null ) {
+    this.setImage( 0 );
   }
 };
 
