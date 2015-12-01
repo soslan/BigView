@@ -32,10 +32,10 @@
           <p>
             Click "Try" in each example to see it in action.
           </p>
-          <div>
+          <div class="try-conf">
             <h3>All on</h3>
-            <p>In this example every feature is turned on. <button type="button" class="btn btn-success btn-xs">Try</button></p>
-            <pre><code>var options = {
+            <p>In this example every feature is turned on. <button type="button" class="btn btn-success btn-xs try">Try</button></p>
+            <pre><code class="conf">var options = {
   showGallery: true,
   showDescription: true,
   enableDescription: true,
@@ -56,7 +56,18 @@
     <!-- bigview.js -->
     <script src="dist/bigview.js"></script>
     <script type="text/javascript">
-      var example1 = new BigView
+      $(".try-conf").each(function(i, tryCont){
+        var options;
+        optionsCode = $(tryCont).find(".conf").text();
+        console.log(optionsCode);
+        eval(optionsCode);
+        console.log(options);
+        var bigView = new BigView(options);
+        $(tryCont).find(".try").click(function(e){
+          console.log("Try");
+          bigView.show();
+        });
+      });
     </script>
   </body>
 </html>
