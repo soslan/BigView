@@ -3,9 +3,8 @@
 $animation-duration: 0.1s;
 $bar-height: 32px;
 
-
 .bv-container{
-  position: fixed;
+  position: absolute;
   z-index: 1001;
   top: 0;
   bottom: 0;
@@ -13,10 +12,15 @@ $bar-height: 32px;
   right: 0;
   background-color: black;
   outline: none;
+  overflow: hidden;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   transition: opacity $animation-duration, transform $animation-duration;
+
+  body > &{
+    position: fixed;
+  }
 
   &.bv-no-gallery{
     & > .bv-gallery{

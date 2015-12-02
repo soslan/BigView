@@ -200,10 +200,13 @@ function BigView( args ) {
   this.currentKeyIndex;
 
   if ( args.appendTo instanceof Node ) {
-    args.appendTo.appendChild( this.container );
+    this.parent = args.appendTo;
   } else {
-    document.body.appendChild( this.container );
+    this.parent = document.body;
   }
+
+  this.parent.appendChild( this.container );
+  this.parent.style.position = "relative";
 
   if ( typeof BigView.numberOfBigViews !== "number" ) {
     BigView.numberOfBigViews = 0;
