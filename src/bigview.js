@@ -199,7 +199,11 @@ function BigView( args ) {
   // Current image object
   this.currentKeyIndex;
 
-  document.body.appendChild( this.container );
+  if ( args.appendTo instanceof Node ) {
+    args.appendTo.appendChild( this.container );
+  } else {
+    document.body.appendChild( this.container );
+  }
 
   if ( typeof BigView.numberOfBigViews !== "number" ) {
     BigView.numberOfBigViews = 0;
@@ -271,7 +275,6 @@ BigView.prototype.getImageObject = function( arg ) {
     return null;
   }
 };
-
 
 BigView.prototype.setImage = function( img ) {
   var self = this;
