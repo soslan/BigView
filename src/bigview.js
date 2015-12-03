@@ -95,23 +95,25 @@ function BigView( args ) {
     }
   });
 
-  this.counter = e({
-    tag: "span",
-    class: "bv-counter",
-    parent: this.navigationLeft
-  });
+  if ( args.enableCounter === undefined || args.enableCounter == true) {
+    this.counter = e({
+      tag: "span",
+      class: "bv-counter",
+      parent: this.navigationLeft
+    });
 
-  this.counterCurrent = e({
-    tag: "span",
-    class: "bv-counter-current",
-    parent: this.counter
-  });
+    this.counterCurrent = e({
+      tag: "span",
+      class: "bv-counter-current",
+      parent: this.counter
+    });
 
-  this.counterAll = e({
-    tag: "span",
-    class: "bv-counter-all",
-    parent: this.counter
-  });
+    this.counterAll = e({
+      tag: "span",
+      class: "bv-counter-all",
+      parent: this.counter
+    });
+  }
 
   this.closeButton = e({
     class:"bv-button bv-close",
@@ -285,7 +287,9 @@ BigView.prototype.setImage = function( img ) {
   if ( img instanceof BigViewImage ) {
     var old = this.current;
     this.current = img;
-    this.counterCurrent.innerHTML = img.i + 1;
+    if ( this.counterCurrent instanceof Node ) {
+      this.counterCurrent.innerHTML = img.i + 1;
+    }
     this.fixGalleryPosition();
     img.activate();
     if ( old != null && old != img ) {
@@ -305,7 +309,9 @@ BigView.prototype.prev = function() {
 BigView.prototype.addBigViewImage = function( img ) {
   if ( img instanceof BigViewImage ) {
     this.images.push( img );
-    this.counterAll.innerHTML = this.images.length;
+    if ( this.counterAll instanceof Node ) {
+      this.counterAll.innerHTML = this.images.length;
+    }
     this.body.appendChild( img.container );
   }
 };
