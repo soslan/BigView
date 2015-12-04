@@ -95,7 +95,7 @@ function BigView( args ) {
     }
   });
 
-  if ( args.enableCounter === undefined || args.enableCounter == true) {
+  if ( args.enableCounter === undefined || args.enableCounter == true ) {
     this.counter = e({
       tag: "span",
       class: "bv-counter",
@@ -203,11 +203,17 @@ function BigView( args ) {
 
   if ( args.appendTo instanceof Node ) {
     this.parent = args.appendTo;
+  } else if ( args.appendTo.jquery ) {
+    this.parent = args.appendTo[ 0 ];
+  } else if ( typeof args.appendTo === "string" ) {
+    this.parent = document.querySelector( args.appendTo );
   } else {
     this.parent = document.body;
   }
 
-  this.parent.appendChild( this.container );
+  if ( this.parent instanceof Node ) {
+    this.parent.appendChild( this.container );
+  }
   this.parent.style.position = "relative";
 
   if ( typeof BigView.numberOfBigViews !== "number" ) {
@@ -215,7 +221,6 @@ function BigView( args ) {
   }
   this.id = BigView.numberOfBigViews;
   BigView.numberOfBigViews++;
-
 };
 
 BigView.prototype.show = function( target ) {
